@@ -1,0 +1,15 @@
+{
+  "name": "baseball-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "author": "Julian <julianrosenthal@yahoo.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "npx nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.13.0"
+  }
+}
