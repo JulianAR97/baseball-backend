@@ -1,0 +1,36 @@
+import mongoose from 'mongoose';
+
+const pitchingSchema = mongoose.Schema({
+  playerID: String,
+  yearID: String,
+  stint: String,
+  teamID: String,
+  lgID: String,
+  W: String,
+  L: String,
+  G: String,
+  GS: String,
+  CG: String,
+  SHO: String,
+  SV: String,
+  IPouts: String,
+  H: String,
+  ER: String,
+  HR: String,
+  BB: String,
+  SO: String,
+  BAOpp: String,
+  ERA: String,
+  IBB: String,
+  WP: String,
+  HBP: String,
+  BK: String,
+  BFP: String,
+  GF: String,
+  R: String,
+  SH: String,
+  SF: String,
+  GIDP: String,
+})
+
+export default mongoose.model('pitching', pitchingSchema)
