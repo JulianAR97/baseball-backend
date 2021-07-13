@@ -14,7 +14,7 @@ app.use(express.json())
 // app.use(cors())
 
 // Connect to Database
-const connection_url = process.env.CONNECTION_URL
+const connection_url = "mongodb+srv://admin:6714tQBA5oDLB61E@cluster0.r6nql.mongodb.net/test?retryWrites=true&w=majority"
 mongoose.connect(connection_url, {
   useNewUrlParser: true,
   useCreateIndex: true,
