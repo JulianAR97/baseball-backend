@@ -1,0 +1,5 @@
+{
+  "env": {
+    "CONNECTION_URL": "mongodb+srv://admin:6714tQBA5oDLB61E@cluster0.r6nql.mongodb.net/test?retryWrites=true&w=majority"
+  }
+}
