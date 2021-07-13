@@ -2,28 +2,29 @@ import express from 'express';
 import mongoose from 'mongoose';
 import {addCaseInsensitive} from './helpers.js'
 import cors from 'cors';
+import {config as dotenvConfig} from 'dotenv'
 import batting from './db/Batting.js'
-import collegePlaying from './db/CollegePlaying.js'
-import schools from './db/Schools.js'
 import pitching from './db/Pitching.js'
 import people from './db/People.js'
 import teams from './db/Teams.js'
 import teamsFranchises from './db/TeamsFranchises.js'
 
+// Get environment variables when in development
+if (process.env.NODE_ENV !== 'production') {
+  dotenvConfig()
+}
+
 const app = express();
 app.use(express.json())
-const port = process.env.PORT || 8001
-const connection_url = process.env.CONNECTION_URL
+app.use(cors())
 
+// Connect to Database
+const connection_url = process.env.CONNECTION_URL
 mongoose.connect(connection_url, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true
 })
-
-// Helper functions
-
-
 
 // Routes 
 app.get('/', (req, res) => {
@@ -186,9 +187,8 @@ app.get('/api/stats/pitching/:playerID', (req, res) => {
 })
 
 
-
-console.log('here at 190 ', process.env.NODE_ENV)
-
+// Listen
+const port = process.env.PORT || 8001
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 
