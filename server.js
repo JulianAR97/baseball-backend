@@ -13,7 +13,7 @@ import teamsFranchises from './db/TeamsFranchises.js'
 const app = express();
 app.use(express.json())
 const port = process.env.PORT || 8001
-const connection_url = 'mongodb+srv://admin:6714tQBA5oDLB61E@cluster0.r6nql.mongodb.net/test?retryWrites=true&w=majority'
+const connection_url = process.env.connectionURL
 
 mongoose.connect(connection_url, {
   useNewUrlParser: true,
@@ -187,7 +187,7 @@ app.get('/api/stats/pitching/:playerID', (req, res) => {
 
 
 
-
+console.log('here at 190 ', process.env.NODE_ENV)
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
