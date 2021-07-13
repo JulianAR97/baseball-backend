@@ -18,7 +18,6 @@
   },
   "devDependencies": {
     "chai": "^4.3.4",
-    "dotenv": "^10.0.0",
     "mocha": "^9.0.1"
   },
   "engines": {
