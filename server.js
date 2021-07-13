@@ -13,7 +13,7 @@ import teamsFranchises from './db/TeamsFranchises.js'
 const app = express();
 app.use(express.json())
 const port = process.env.PORT || 8001
-const connection_url = process.env.connectionURL
+const connection_url = process.env.CONNECTION_URL
 
 mongoose.connect(connection_url, {
   useNewUrlParser: true,
