@@ -2,17 +2,12 @@ import express from 'express';
 import mongoose from 'mongoose';
 import {addCaseInsensitive} from './helpers.js'
 import cors from 'cors';
-import {config as dotenvConfig} from 'dotenv'
 import batting from './db/Batting.js'
 import pitching from './db/Pitching.js'
 import people from './db/People.js'
 import teams from './db/Teams.js'
 import teamsFranchises from './db/TeamsFranchises.js'
 
-// Get environment variables when in development
-if (process.env.NODE_ENV !== 'production') {
-  dotenvConfig()
-}
 
 const app = express();
 app.use(express.json())
