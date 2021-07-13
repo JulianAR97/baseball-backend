@@ -21,6 +21,6 @@ The purpose of this project is to create a free api for baseball statistics. The
   * /api/stats/pitching/degroja01 => returns Jacob Degrom statistics
 
 ### Future Plans
-[] Add advanced statistics to use for analytics\ 
-[] Update database by scraping web daily for statistics\
-[] Add a frontend to display data\
+[] Add advanced statistics to use for analytics<br/>
+[] Update database by scraping web daily for statistics<br/>
+[] Add a frontend to display data<br/>
