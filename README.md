@@ -4,7 +4,7 @@
 The purpose of this project is to create a free api for baseball statistics. The statistics provided by the project are current through the 2020 season. Eventually I would like to scrape for statistics daily. 
 
 ### How to use
-* Once hosted, more information will be added
+* Base URL is https://baseball-api-nodejs.herokuapp.com/
 * Routes
   * /api/people
   * /api/teams
