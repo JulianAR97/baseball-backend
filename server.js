@@ -11,7 +11,7 @@ import teamsFranchises from './db/TeamsFranchises.js'
 
 const app = express();
 app.use(express.json())
-app.use(cors())
+// app.use(cors())
 
 // Connect to Database
 const connection_url = process.env.CONNECTION_URL
