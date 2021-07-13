@@ -6,7 +6,8 @@
   "author": "Julian <julianrosenthal@yahoo.com>",
   "license": "MIT",
   "scripts": {
-    "start": "npx nodemon server.js"
+    "start": "node server.js",
+    "dev": "npx nodemon server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
