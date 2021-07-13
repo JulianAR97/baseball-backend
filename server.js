@@ -7,11 +7,17 @@ import pitching from './db/Pitching.js'
 import people from './db/People.js'
 import teams from './db/Teams.js'
 import teamsFranchises from './db/TeamsFranchises.js'
+import {config as dotenvConfig} from 'dotenv'
 
+
+// Get environment variables for developing locally
+if (process.env.NODE_ENV !== 'production') {
+  dotenvConfig();
+}
 
 const app = express();
 app.use(express.json())
-// app.use(cors())
+app.use(cors())
 
 // Connect to Database
 const connection_url = process.env.CONNECTION_URL
