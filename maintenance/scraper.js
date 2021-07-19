@@ -120,10 +120,10 @@ export const scrapeScoreboard = async (params) => {
       data = await getOdds(baseURL)
       break;
     
-    case 'SCOREBOARD':
+    case 'SCORES':
       let url =
         params.date ?
-        baseURL + `/_/date/${date}` :
+        baseURL + `/_/date/${params.date}` :
         baseURL
 
       data = await getScores(url)

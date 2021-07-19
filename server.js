@@ -103,11 +103,6 @@ app.get('/api/people/:playerID', (req, res) => {
   })
 })
 
-app.get('/api/odds', async (req, res) => {
-  const data = await scrapeScoreboard({type: 'ODDS'})
-  res.status(200).json(data)
-
-})
 
 /* 
 Search Routes For Teams and People
@@ -193,6 +188,22 @@ app.get('/api/stats/pitching/:playerID', (req, res) => {
   })
 })
 
+// Live data
+app.get('/api/odds', async (req, res) => {
+  const data = await scrapeScoreboard({type: 'ODDS'})
+  res.status(200).json(data)
+})
+
+app.get('/api/scoreboard', async (req, res) => {
+  const data = await scrapeScoreboard({type: 'SCORES'})
+  res.status(200).json(data)
+})
+
+app.get('/api/scoreboard/:yyyy/:mm/:dd', async (req, res) => {
+  const date = req.params.yyyy + req.params.mm + req.params.dd
+  const data = await scrapeScoreboard({type: 'SCORES', date})
+  res.status(200).json(data)
+})
 
 // Listen
 const port = process.env.PORT || 8001
