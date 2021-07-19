@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import {addCaseInsensitive} from './helpers.js'
+import { addCaseInsensitive } from './helpers.js'
+import { scrapeScoreboard } from './maintenance/scraper.js'
 import cors from 'cors';
 import batting from './db/Batting.js'
 import pitching from './db/Pitching.js'
@@ -102,6 +103,11 @@ app.get('/api/people/:playerID', (req, res) => {
   })
 })
 
+app.get('/api/odds', async (req, res) => {
+  const data = await scrapeScoreboard({type: 'ODDS'})
+  res.status(200).json(data)
+
+})
 
 /* 
 Search Routes For Teams and People

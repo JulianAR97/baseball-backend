@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import cheerio from 'cheerio';
 
 const getData = async (url) => {
-  console.log('Pulling data....')
+  console.log('Pulling data...')
   
   const website = await fetch(url)
     .then(res => res.text())
@@ -112,7 +112,7 @@ const dateToEST = (date) => {
 
 // Run
 
-const scrapeScoreboard = async (params) => {
+export const scrapeScoreboard = async (params) => {
   const baseURL = "https://www.espn.com/mlb/scoreboard"
   let data;
   switch (params.type) {
@@ -134,3 +134,4 @@ const scrapeScoreboard = async (params) => {
 
   return data;
 }
+
