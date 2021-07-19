@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import { addCaseInsensitive } from './helpers.js'
-import { scrapeScoreboard } from './maintenance/scraper.js'
+import { scrapeScoreboard, scrapeBoxscore } from './maintenance/scraper.js'
 import cors from 'cors';
 import batting from './db/Batting.js'
 import pitching from './db/Pitching.js'
@@ -202,6 +202,11 @@ app.get('/api/scoreboard', async (req, res) => {
 app.get('/api/scoreboard/:yyyy/:mm/:dd', async (req, res) => {
   const date = req.params.yyyy + req.params.mm + req.params.dd
   const data = await scrapeScoreboard({type: 'SCORES', date})
+  res.status(200).json(data)
+})
+
+app.get('/api/boxscore/:gameID', async (req, res) => {
+  const data = await scrapeBoxscore(req.params.gameID)
   res.status(200).json(data)
 })
 
