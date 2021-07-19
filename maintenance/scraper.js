@@ -70,10 +70,12 @@ const getOdds = async (url) => {
   for (let game of data) {
     const name = game.shortName
     const odds = game.competitions[0].odds
-    const moneyLine = odds[0].details || 'n/a'
-    const overUnder = odds[0].overUnder || 'n/a'
-    const oddsInfo = {name, moneyLine, overUnder}
-    parsed.push(oddsInfo)
+    if (odds) {
+      const moneyLine = odds[0].details || 'n/a'
+      const overUnder = odds[0].overUnder || 'n/a'
+      const oddsInfo = {name, moneyLine, overUnder}
+      parsed.push(oddsInfo)
+    }
   }
 
   console.log('Done')
