@@ -115,30 +115,3 @@ const dateToEST = (date) => {
   
   return dateObj
 }
-
-
-
-// Run
-
-// export const scrapeScoreboard = async (params) => {
-//   const baseURL = "https://www.espn.com/mlb/scoreboard"
-//   let data;
-//   switch (params.type) {
-//     case 'ODDS':
-//       data = await getOdds(baseURL)
-//       break;
-    
-//     case 'SCORES':
-//       let url =
-//         params.date ?
-//         baseURL + `/_/date/${params.date}` :
-//         baseURL
-
-//       data = await getScores(url)
-
-//     default:
-//       break;
-//   }
-
-//   return data;
-// }
