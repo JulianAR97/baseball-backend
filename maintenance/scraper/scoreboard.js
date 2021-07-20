@@ -42,8 +42,11 @@ export const getScores = async (date) => {
   let parsed = [];
   
   for (let game of data) {
+    
     const name = game.shortName
     const competitors = game.competitions[0].competitors
+    console.log(competitors)
+    console.log()
     const homeRuns = competitors.find(c => c.homeAway === 'home').score
     const awayRuns = competitors.find(c => c.homeAway === 'away').score
     const homeName = name.split('@')[1].trim()
@@ -52,13 +55,17 @@ export const getScores = async (date) => {
     const dateTime = dateToEST(game.competitions[0].date)
     const {date, time} = dateTime
     const score = { [awayName]: awayRuns, [homeName]: homeRuns }
+    const [homeLogo, awayLogo] = competitors.map(c => c.team.logo)
+    const logos = {home: homeLogo, away: awayLogo}
+    
     const boxscore = `/api/boxscore/${gameID}`
     const status = 
       game.status.type.description === 'Final' ? 
       game.status.type.detail :
       game.status.type.description
     
-    const scoreInfo = {gameID, name, score, date, time, status, boxscore}
+    const scoreInfo = {gameID, name, score, date, time, status, boxscore, logos}
+    console.log(scoreInfo)
     parsed.push(scoreInfo)
   
   }
