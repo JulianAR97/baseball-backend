@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import { addCaseInsensitive } from './helpers.js'
-import { scrapeScoreboard, scrapeBoxscore } from './maintenance/scraper.js'
+import Scraper from './maintenance/scraper/scraper.js'
 import cors from 'cors';
 import batting from './db/Batting.js'
 import pitching from './db/Pitching.js'
@@ -194,23 +194,23 @@ app.get('/api/stats/pitching/:playerID', (req, res) => {
 
 // Live data
 app.get('/api/odds', async (req, res) => {
-  const data = await scrapeScoreboard({type: 'ODDS'})
+  const data = await Scraper.odds()
   res.status(200).json(data)
 })
 
 app.get('/api/scoreboard', async (req, res) => {
-  const data = await scrapeScoreboard({type: 'SCORES'})
+  const data = await Scraper.scores()
   res.status(200).json(data)
 })
 
 app.get('/api/scoreboard/:yyyy/:mm/:dd', async (req, res) => {
   const date = req.params.yyyy + req.params.mm + req.params.dd
-  const data = await scrapeScoreboard({type: 'SCORES', date})
+  const data = await Scraper.scores(date)
   res.status(200).json(data)
 })
 
 app.get('/api/boxscore/:gameID', async (req, res) => {
-  const data = await scrapeBoxscore(req.params.gameID)
+  const data = await Scraper.boxscore(req.params.gameID)
   res.status(200).json(data)
 })
 
