@@ -4,7 +4,7 @@ import cheerio from 'cheerio';
 const baseURL = "https://www.espn.com/mlb/scoreboard"
 
 const getData = async (url) => {
-  console.log('Pulling data...')
+  console.log(`Pulling data from ${url}...`)
   
   const website = await fetch(url)
     .then(res => res.text())
@@ -35,7 +35,6 @@ const getData = async (url) => {
 
 export const getScores = async (date) => {
   const url = date ? baseURL + `/_/date/${date}` : baseURL 
-  console.log(url)
   const data = await getData(url)
   
   console.log('Parsing scores...')
@@ -45,8 +44,6 @@ export const getScores = async (date) => {
     
     const name = game.shortName
     const competitors = game.competitions[0].competitors
-    console.log(competitors)
-    console.log()
     const homeRuns = competitors.find(c => c.homeAway === 'home').score
     const awayRuns = competitors.find(c => c.homeAway === 'away').score
     const homeName = name.split('@')[1].trim()
@@ -58,16 +55,17 @@ export const getScores = async (date) => {
     const [homeLogo, awayLogo] = competitors.map(c => c.team.logo)
     const logos = {home: homeLogo, away: awayLogo}
     
+    const inning = game.competitions[0].status.period || '0'
+    
     const boxscore = `/api/boxscore/${gameID}`
     const status = 
       game.status.type.description === 'Final' ? 
       game.status.type.detail :
       game.status.type.description
     
-    const scoreInfo = {gameID, name, score, date, time, status, boxscore, logos}
-    console.log(scoreInfo)
+    const scoreInfo = {gameID, name, score, inning, status, date, time, boxscore, logos}
+    
     parsed.push(scoreInfo)
-  
   }
 
   console.log('Done')

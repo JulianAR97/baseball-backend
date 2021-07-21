@@ -9,17 +9,10 @@ export const scrapeBoxscore = async (gameID) => {
     .then(body => body)
 
   const $ = cheerio.load(website);
-  const trClassesOk = [
-    "baseball-lineup__player-row"
-  ]
   
-  const rows = await $("tr").toArray();
+  const playerRows = await $("tr.baseball-lineup__player-row").toArray();
   let teamStats = await $("div.team-stats-container").toArray()
   teamStats = collectTeamStats(teamStats)
-  
-  let playerRows = rows.filter(s => 
-    trClassesOk.indexOf(s.attribs.class) !== -1
-  )
     
   let boxscore = {away: {}, home: {}}
   let batting = [];
@@ -28,7 +21,7 @@ export const scrapeBoxscore = async (gameID) => {
   // these variables will act like switches to know when to switch teams
   let currentType = 'batter'
   let switchTypeCount = 0;
-
+  
   playerRows.forEach(row => {
     
     let type = 
@@ -92,7 +85,7 @@ const parseBatterRow = (row) => {
       }
     }
   })
-
+  
   return playerData
 }
 
@@ -117,6 +110,7 @@ const parsePitcherRow = (row) => {
   
   return playerData
 }
+
 
 const collect = (data, collection = []) => {
   data.forEach(
@@ -155,7 +149,6 @@ const collectTeamStats = (teamStats) => {
 
   let i = 0;
   while (i < collection.length) {
-    // Use regex to remove redundant 'Team' and ':' for object keys
     let key = collection[i]
       .replaceAll(new RegExp(/:|Team/, 'g'), '')
       .toLowerCase()
@@ -172,6 +165,7 @@ const collectTeamStats = (teamStats) => {
       *  Otherwise we use collection[i] as key and collection[i + 1] as value
       *  So we skip over the next iteration
     */
+    
     if (Object.keys(awayStats).includes(key)) {
       currCat = key
       if (Object.keys(awayStats[currCat]).length > 0) {away = false}
@@ -185,4 +179,6 @@ const collectTeamStats = (teamStats) => {
   
   return {homeStats, awayStats}
 }
+
+
 
