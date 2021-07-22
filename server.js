@@ -86,16 +86,6 @@ app.get('/api/active/teams', (req, res) => {
   })
 })
 
-// Will finish later
-// app.get('/api/active/people', (req, res) => {
-//   people.find({finalGame: {$gt: '2020-06-09'}}, (err, data) => {
-//     if (err) {
-//       res.status(500).json(err)
-//     } else {
-//       res.status(200).json(data)
-//     }
-//   })
-// })
 
 app.get('/api/people/:playerID', (req, res) => {
   people.find({playerID: req.params.playerID}, (err, data) => {
@@ -168,28 +158,10 @@ app.get('/api/stats/teams/:franchID', (req, res) => {
   })
 })
 
-/* 
-once you have a playerID from player search,
-you can use the id which will return player stats from all of their active years
-*/
-app.get('/api/stats/batting/:playerID', (req, res) => {
-  batting.find({playerID: req.params.playerID}, (err, data) => {
-    if (err) {
-      res.status(500).json(err)
-    } else {
-      res.status(200).json(data)
-    }
-  })
-})
 
-app.get('/api/stats/pitching/:playerID', (req, res) => {
-  pitching.find({playerID: req.params.playerID}, (err, data) => {
-    if (err) {
-      res.status(500).json(err)
-    } else {
-      res.status(200).json(data)
-    }
-  })
+app.get('/api/stats/players/:playerID', async (req, res) => {
+  const data = await Scraper.stats(req.params.playerID)
+  res.status(200).json(data)
 })
 
 // Live data
