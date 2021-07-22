@@ -5,6 +5,7 @@ const teamsFranchisesSchema = mongoose.Schema({
   franchName: String,
   active: String,
   NAassoc: String,
+  logo: String
 })
 
 export default mongoose.model('teamsFranchises', teamsFranchisesSchema)
