@@ -75,6 +75,16 @@ app.get('/api/teams/:franchID', (req, res) => {
   })
 })
 
+app.get('/api/teams/:franchID/40man', async (req, res) => {
+  const data = await Scraper.fortyMan(req.params.franchID)
+  res.status(200).json(data)
+})
+
+app.get('/api/teams/:franchID/active', async (req, res) => {
+  const data = await Scraper.active(req.params.franchID)
+  res.status(200).json(data)
+})
+
 // Returns all active teams
 app.get('/api/active/teams', (req, res) => {
   teamsFranchises.find({active: 'Y'}, (err, data) => {
