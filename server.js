@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import { addCaseInsensitive } from './helpers.js'
-import Scraper from './maintenance/scraper/scraper.js'
+import Scraper from './lib/scraper/scraper.js'
 import cors from 'cors';
 import batting from './db/Batting.js'
 import pitching from './db/Pitching.js'
@@ -75,26 +75,18 @@ app.get('/api/teams/:franchID', (req, res) => {
   })
 })
 
+
+// 40 man roster
 app.get('/api/teams/:franchID/40man', async (req, res) => {
   console.log('here')
   const data = await Scraper.fortyMan(req.params.franchID)
   res.status(200).json(data)
 })
 
+// active roster
 app.get('/api/teams/:franchID/active', async (req, res) => {
   const data = await Scraper.active(req.params.franchID)
   res.status(200).json(data)
-})
-
-// Returns all active teams
-app.get('/api/active/teams', (req, res) => {
-  teamsFranchises.find({active: 'Y'}, (err, data) => {
-    if (err) {
-      res.status(500).json(err)
-    } else {
-      res.status(200).json(data)
-    }
-  })
 })
 
 
