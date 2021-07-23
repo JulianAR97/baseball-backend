@@ -80,8 +80,6 @@ const parseBody = (tBody) => {
   
 }
 
-
-
 const parseTables = (tables) => {
   let parsed = [];
 
@@ -171,20 +169,28 @@ const parse40Body = (body) => {
           sanitize40Keys[td.attribs['data-stat']] || 
           td.attribs['data-stat'] // Try dataStat    
         
-        let data = depthFirstData(td.children)
+        let data = depthFirstData(td.children)[0]
         
         // Don't care about this stat
-        if (dataStat === 'ranker') { continue }
+        if (['ranker', 'first_year'].includes(dataStat)) 
+          continue
+
+        if (dataStat === 'active') {
+          data = td.children[0]?.data
+        }
         
         // switch active and dl categories to booleans
-        if (['active', 'dl'].includes(dataStat)) {
+        if (['active', 'dl'].includes(dataStat))
           data = !!data
-        }
+    
         player[dataStat] = data
       } 
     }
-    players.push(player)
+    if (!!Object.keys(player)[0])
+      players.push(player)
   } 
+
+  return players
 }
 
 
@@ -212,11 +218,16 @@ export const scrape40Man = async (teamID) => {
 
   let body = table[0].children.find(c => c.name === 'tbody')
 
-  parse40Body(body)
+  let players = parse40Body(body)
   
-  // console.log(json)
-
+  console.log('done')
+  return players
 }
 
-scrape40Man('ATL')
+export const getActive = async (teamID) => {
+  let players = await scrape40Man(teamID)
+
+  return players.filter(p => p.active)
+}
+
 
