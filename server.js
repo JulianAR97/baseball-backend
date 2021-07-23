@@ -32,9 +32,17 @@ mongoose.connect(connection_url, {
   useUnifiedTopology: true
 })
 
+
 // Routes 
 app.get('/', (req, res) => {
-  res.json([])
+  res.status(200).json([])
+})
+
+
+app.get('/api/routes', (req, res) => {
+  const routes = app._router.stack.map((r) => r.route?.path || '').filter(r => r.match(/\/api/))
+  console.log(routes)
+  res.status(200).json(routes)
 })
 
 // Returns all people
