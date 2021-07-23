@@ -3,7 +3,7 @@ import cheerio from 'cheerio'
 
 
 const getData = async (url, nodeType) => {
-  const browser = await puppeteer.launch({args: ['--no-sandbox']}),
+  const browser = await puppeteer.launch({args: ['--no-sandbox']})
   
   const page = await browser.newPage();
   await page.goto(url);
