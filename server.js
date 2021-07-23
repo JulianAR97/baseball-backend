@@ -76,6 +76,7 @@ app.get('/api/teams/:franchID', (req, res) => {
 })
 
 app.get('/api/teams/:franchID/40man', async (req, res) => {
+  console.log('here')
   const data = await Scraper.fortyMan(req.params.franchID)
   res.status(200).json(data)
 })
