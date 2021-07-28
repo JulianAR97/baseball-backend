@@ -41,7 +41,6 @@ app.get('/', (req, res) => {
 
 app.get('/api/routes', (req, res) => {
   const routes = app._router.stack.map((r) => r.route?.path || '').filter(r => r.match(/\/api/))
-  console.log(routes)
   res.status(200).json(routes)
 })
 
