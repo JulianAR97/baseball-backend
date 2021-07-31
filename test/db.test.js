@@ -1,4 +1,4 @@
-import assert from 'assert';
+import chai, {expect} from 'chai';
 import mongoose from 'mongoose';
 import People from '../db/People.js'
 import dotenv from 'dotenv';
@@ -32,15 +32,15 @@ describe('DB', function() {
       it('should be of type string', function() {
         let bmTypes = birthMonths.map(bm => typeof bm)
   
-        assert.strictEqual(bmTypes[0], 'string')
-        assert.strictEqual(Helpers.Filter.noUniqueValues(bmTypes), true)
+        expect(bmTypes[0]).to.equal('string')
+        expect(Helpers.Filter.noUniqueValues(bmTypes)).to.be.true
       })
       
       it ('should be of length 2', function() {
         let bmLengths = birthMonths.map(bm => bm.length)
   
-        assert.strictEqual(bmLengths[0], 2)
-        assert.strictEqual(Helpers.Filter.noUniqueValues(bmLengths), true)
+        expect(bmLengths[0]).to.equal(2)
+        expect(Helpers.Filter.noUniqueValues(bmLengths)).to.be.true
       })
       
     })
@@ -51,15 +51,15 @@ describe('DB', function() {
       it('should be of type string', function() {
         let byTypes = birthYears.map(by => typeof by)
 
-        assert.strictEqual(byTypes[0], 'string')
-        assert.strictEqual(Helpers.Filter.noUniqueValues(byTypes), true)
+        expect(byTypes[0]).to.equal('string')
+        expect(Helpers.Filter.noUniqueValues(byTypes)).to.be.true
       })
 
       it('should be of length 4', function() {
         let byLengths = birthYears.map(by => by.length)
 
-        assert.strictEqual(byLengths[0], 4)
-        assert.strictEqual(Helpers.Filter.noUniqueValues(byLengths), true)
+        expect(byLengths[0]).to.equal(4)
+        expect(Helpers.Filter.noUniqueValues(byLengths)).to.be.true
       })
     })
 
@@ -69,15 +69,15 @@ describe('DB', function() {
       it('should be of type string', function() {
         let bdTypes = birthDays.map(bd => typeof bd)
 
-        assert.strictEqual(bdTypes[0], 'string')
-        assert.strictEqual(Helpers.Filter.noUniqueValues(bdTypes), true)
+        expect(bdTypes[0]).to.equal('string')
+        expect(Helpers.Filter.noUniqueValues(bdTypes)).to.be.true
       })
 
       it('should be of length 2', function() {
         let bdLengths = birthDays.map(bd => bd.length)
 
-        assert.strictEqual(bdLengths[0], 2)
-        assert.strictEqual(Helpers.Filter.noUniqueValues(bdLengths), true)
+        expect(bdLengths[0]).to.equal(2)
+        expect(Helpers.Filter.noUniqueValues(bdLengths)).to.be.true
       })
     })
   })
