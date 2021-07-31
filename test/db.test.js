@@ -1,4 +1,4 @@
-import chai, {expect} from 'chai';
+import chai, { expect } from 'chai';
 import mongoose from 'mongoose';
 import People from '../db/People.js'
 import dotenv from 'dotenv';
@@ -32,15 +32,15 @@ describe('DB', function() {
       it('should be of type string', function() {
         let bmTypes = birthMonths.map(bm => typeof bm)
   
-        expect(bmTypes[0]).to.equal('string')
-        expect(Helpers.Filter.noUniqueValues(bmTypes)).to.be.true
+        expect(bmTypes[0]).to.be.a('string')
+        expect(Helpers.oneUniqueElement(bmTypes)).to.be.true
       })
       
       it ('should be of length 2', function() {
         let bmLengths = birthMonths.map(bm => bm.length)
   
         expect(bmLengths[0]).to.equal(2)
-        expect(Helpers.Filter.noUniqueValues(bmLengths)).to.be.true
+        expect(Helpers.oneUniqueElement(bmLengths)).to.be.true
       })
       
     })
@@ -51,15 +51,15 @@ describe('DB', function() {
       it('should be of type string', function() {
         let byTypes = birthYears.map(by => typeof by)
 
-        expect(byTypes[0]).to.equal('string')
-        expect(Helpers.Filter.noUniqueValues(byTypes)).to.be.true
+        expect(byTypes[0]).to.be.a('string')
+        expect(Helpers.oneUniqueElement(byTypes)).to.be.true
       })
 
       it('should be of length 4', function() {
         let byLengths = birthYears.map(by => by.length)
 
         expect(byLengths[0]).to.equal(4)
-        expect(Helpers.Filter.noUniqueValues(byLengths)).to.be.true
+        expect(Helpers.oneUniqueElement(byLengths)).to.be.true
       })
     })
 
@@ -69,15 +69,15 @@ describe('DB', function() {
       it('should be of type string', function() {
         let bdTypes = birthDays.map(bd => typeof bd)
 
-        expect(bdTypes[0]).to.equal('string')
-        expect(Helpers.Filter.noUniqueValues(bdTypes)).to.be.true
+        expect(bdTypes[0]).to.be.a('string')
+        expect(Helpers.oneUniqueElement(bdTypes)).to.be.true
       })
 
       it('should be of length 2', function() {
         let bdLengths = birthDays.map(bd => bd.length)
 
         expect(bdLengths[0]).to.equal(2)
-        expect(Helpers.Filter.noUniqueValues(bdLengths)).to.be.true
+        expect(Helpers.oneUniqueElement(bdLengths)).to.be.true
       })
     })
   })
