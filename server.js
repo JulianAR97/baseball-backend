@@ -95,23 +95,32 @@ app.get('/api/teams/:franchID', (req, res) => {
 // 40 man roster
 app.get('/api/teams/:teamID/40man', async (req, res) => {
   const {teamID} = req.params
-  const players = await Roster.find({teamID}, (err, data) => {
+  const teamRoster = await Roster.find({teamID})
+  const playerIDS = teamRoster[0].players.map(p => p.bbrefID)
+  await people.find({'bbrefID': {$in: playerIDS}}, (err, data) => {
     if (err) {
       res.status(500).json(err)
     } else {
-      
+      data = data.map(p => Helpers.Data.cleanPlayer(p))
+      res.status(200).json(data)
     }
   })
-
-
-  res.status(200).json(data)
+  
 })
 
 // active roster
 app.get('/api/teams/:teamID/active', async (req, res) => {
-  const {franchID} = req.params
-  const data = await Scraper.active(franchID)
-  res.status(200).json(data)
+  const {teamID} = req.params
+  const teamRoster = await Roster.find({teamID})
+  const playerIDS = teamRoster[0].players.filter(p => p.active).map(p => p.bbrefID)
+  await people.find({'bbrefID': {$in: playerIDS}}, (err, data) => {
+    if (err) {
+      res.status(500).json(err)
+    } else {
+      data = data.map(p => Helpers.Data.cleanPlayer(p))
+      res.status(200).json(data)
+    }
+  })
 })
 
 
