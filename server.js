@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import Scraper from './lib/scraper/scraper.js'
 import cors from 'cors';
+import Roster from './db/Roster.js'
 import batting from './db/Batting.js'
 import pitching from './db/Pitching.js'
 import people from './db/People.js'
@@ -92,14 +93,22 @@ app.get('/api/teams/:franchID', (req, res) => {
 
 
 // 40 man roster
-app.get('/api/teams/:franchID/40man', async (req, res) => {
-  const {franchID} = req.params
-  const data = await Scraper.fortyMan(franchID)
+app.get('/api/teams/:teamID/40man', async (req, res) => {
+  const {teamID} = req.params
+  const players = await Roster.find({teamID}, (err, data) => {
+    if (err) {
+      res.status(500).json(err)
+    } else {
+      
+    }
+  })
+
+
   res.status(200).json(data)
 })
 
 // active roster
-app.get('/api/teams/:franchID/active', async (req, res) => {
+app.get('/api/teams/:teamID/active', async (req, res) => {
   const {franchID} = req.params
   const data = await Scraper.active(franchID)
   res.status(200).json(data)
