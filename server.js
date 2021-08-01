@@ -1,6 +1,5 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { addCaseInsensitive } from './helpers.js'
 import Scraper from './lib/scraper/scraper.js'
 import cors from 'cors';
 import batting from './db/Batting.js'
@@ -9,11 +8,13 @@ import people from './db/People.js'
 import teams from './db/Teams.js'
 import teamsFranchises from './db/TeamsFranchises.js'
 import {config as dotenvConfig} from 'dotenv'
+import Helpers from './lib/helpers/helpers.js'
 
 // Get environment variables for developing locally
 if (process.env.NODE_ENV !== 'production') {
   dotenvConfig();
 }
+
 
 // const corsOptions = {
 //   "origin": "*",
@@ -40,12 +41,19 @@ app.get('/', (req, res) => {
 
 
 app.get('/api/routes', (req, res) => {
-  const routes = app._router.stack.map((r) => r.route?.path || '').filter(r => r.match(/\/api/))
+  const routes = app._router.stack.map(
+    r => 
+    r.route?.path || ''
+  )
+  .filter(
+    r => 
+      r.match(/\/api/)
+  )
   res.status(200).json(routes)
 })
 
 // Returns all people
-app.get('/api/people', (req, res) => {
+app.get('/api/players', (req, res) => {
   people.find((err, data) => {
     if (err) {
       res.status(500).json(err)
@@ -71,9 +79,9 @@ Returns basic info provided a franchID
 franchID can be found by using the search route or by listing all teams and manually finding it
 */
 app.get('/api/teams/:franchID', (req, res) => {
-  const id = req.params.franchID;
+  const {franchID} = req.params;
   
-  teamsFranchises.find({franchID: id}, (err, data) => {
+  teamsFranchises.find({franchID}, (err, data) => {
     if (err) {
       res.status(500).json(err)
     } else {
@@ -85,23 +93,25 @@ app.get('/api/teams/:franchID', (req, res) => {
 
 // 40 man roster
 app.get('/api/teams/:franchID/40man', async (req, res) => {
-  console.log('here')
-  const data = await Scraper.fortyMan(req.params.franchID)
+  const {franchID} = req.params
+  const data = await Scraper.fortyMan(franchID)
   res.status(200).json(data)
 })
 
 // active roster
 app.get('/api/teams/:franchID/active', async (req, res) => {
-  const data = await Scraper.active(req.params.franchID)
+  const {franchID} = req.params
+  const data = await Scraper.active(franchID)
   res.status(200).json(data)
 })
 
 
-app.get('/api/people/:playerID', (req, res) => {
+app.get('/api/players/:playerID', (req, res) => {
   people.find({playerID: req.params.playerID}, (err, data) => {
     if (err) {
       res.status(500).json(err)
     } else {
+      data = data.map(d => Helpers.Data.cleanPlayer(d))
       res.status(200).json(data)
     }
   })
@@ -121,14 +131,18 @@ Easiest way is to add query params for franchName
 e.g. /api/search/teams?franchName=angels
 */
 
-app.get('/api/search/people?', (req, res) => {
+app.get('/api/search/players?', (req, res) => {
   let query = Object.assign({}, req.query)
-  query = addCaseInsensitive(query)
+  query = Helpers.addCaseInsensitive(query)
   
   people.find(query, (err, data) => {
     if (err) {
       res.status(500).json(err)
     } else {
+      data = data.map(
+        d => 
+          Helpers.Data.cleanPlayer(d) // organizes data
+      )  
       res.status(200).json(data)
     }
   })
@@ -136,7 +150,7 @@ app.get('/api/search/people?', (req, res) => {
 
 app.get('/api/search/teams?', (req, res) => {
   let query = Object.assign({}, req.query)
-  query = addCaseInsensitive(query)
+  query = Helpers.addCaseInsensitive(query)
   teamsFranchises.find(query, (err, data) => {
     if (err) {
       res.status(500).json(err)
@@ -157,7 +171,7 @@ app.get('/api/stats/teams/:franchID', (req, res) => {
   let query = Object.assign({}, req.query)
   query.franchID = req.params.franchID;
 
-  query = addCaseInsensitive(query)
+  query = Helpers.addCaseInsensitive(query)
   
   teams.find(query, (err, data) => {
     if (err) {
