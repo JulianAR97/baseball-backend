@@ -21,17 +21,12 @@ mongoose.connect(connection_url, {
   useUnifiedTopology: true
 })
 
-
-app.use('/api', apiRouter)
-
- 
-
 app.get('/', (req, res) => {
   res.status(200).json([])
 })
 
-// Displays all routes
-
+// All routes for API
+app.use('/api', apiRouter)
 
 
 // Listen
